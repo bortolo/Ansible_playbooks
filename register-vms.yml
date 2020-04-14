@@ -1,6 +1,8 @@
 ---
 - hosts: all
   tasks:
+    - name: Create new ssh key-pair
+      local_action: command ssh-keygen -t rsa -N “” -q -f ~/.ssh/id_rsa
     - name: Set up authorized_keys for the users
       authorized_key:
        user: myadmin
