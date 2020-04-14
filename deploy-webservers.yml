@@ -1,0 +1,17 @@
+---
+- hosts: webservers
+  tasks:
+    - name: Pull file from source
+      git:
+        repo: 'https://github.com/bortolo/Todolist.git'
+        dest: /home/myadmin/todolistapp
+    - name: kill all node processes
+      command: killall node
+      become: yes
+      become_user: myadmin
+    - name: Start node server
+      command: node app.js &
+      become: yes
+      become_user: myadmin
+      args:
+       chdir: /home/myadmin/todolistapp

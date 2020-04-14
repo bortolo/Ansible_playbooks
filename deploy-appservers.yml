@@ -1,0 +1,13 @@
+---
+- hosts: appservers
+  tasks:
+    - name: Pull file from source
+      git:
+        repo: 'https://github.com/bortolo/mainappTodolilst.git'
+        dest: /home/myadmin/todolistapp
+    - name: Copy war file in webapps directory
+      command: sudo cp HelloWorldServlet.war /var/lib/tomcat8/webapps
+      become: yes
+      become_user: myadmin
+      args:
+       chdir: /home/myadmin/todolistapp
