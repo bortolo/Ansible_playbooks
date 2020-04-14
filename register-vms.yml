@@ -2,9 +2,13 @@
 - hosts: all
   tasks:
     — name: Set up authorized_keys for the users
-       authorized_key: user=myadmin key=”{{ item }}” state=present exclusive=yes
-        with_file:
-         ~/.ssh/id_ssh_rsa.pub
+       authorized_key:
+         user: myadmin
+         key: ”{{ item }}”
+         state: present
+         exclusive: yes
+         with_file:
+           - ~/.ssh/id_ssh_rsa.pub
    - name: move key-pair
       local_action: command mv ~/myadmin/.ssh/id_ssh_rsa ~/.ssh/id_ssh_rsa.bak
        run_once: true
