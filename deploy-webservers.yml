@@ -1,6 +1,6 @@
 ---
 - hosts: webservers
-
+  sudo: yes
   vars:
     - homeDir: /home/myadmin
     - appDir : todolistapp
