@@ -20,7 +20,7 @@
     - name: Pull file from source
       git:
         repo: {{repo}}
-        dest: {{homeDir}}/{{appDir}}
+        dest: dest={{homeDir}}/{{appDir}}
     - name: Running NPM install
       npm: path={{homeDir}}/{{appDir}}/backened
       register: npm_finished
