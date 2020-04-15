@@ -7,14 +7,6 @@
     - repo: 'https://github.com/bortolo/Todolist.git'
 
   tasks:
-    - name: Install Packages
-      apt: name={{ item }} update_cache=yes state=latest
-      become: yes
-      become_user: myadmin
-      with_items:
-       - build-essential
-       - npm
-       - nodejs-legacy
     - name: Install pm2
       npm: name=pm2 global=yes production=yes
     - name: Create APP Directory
