@@ -9,6 +9,8 @@
   tasks:
     - name: Install Packages
       apt: name={{ item }} update_cache=yes state=latest
+      become: yes
+      become_user: myadmin
       with_items:
        - build-essential
        - npm
