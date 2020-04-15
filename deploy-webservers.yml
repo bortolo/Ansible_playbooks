@@ -1,6 +1,6 @@
 ---
 - hosts: webservers
-  sudo: yes
+
   vars:
     - homeDir: /home/myadmin
     - appDir : todolistapp
@@ -24,11 +24,9 @@
       register: npm_finished
       when: git_finished.changed
     - name: Stop APP
-      sudo_user: myadmin
       command: pm2 stop app chdir={{homeDir}}/{{appDir}}/backened
       ignore_errors: yes
     - name: Start APP
-      sudo_user: myadmin
       command: pm2 start index.js --name app chdir={{homeDir}}/{{appDir}}/backened
       ignore_errors: yes
       when: npm_finished.changed
