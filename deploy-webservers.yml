@@ -1,16 +1,36 @@
 ---
 - hosts: webservers
+
+  vars:
+    - homeDir: /home/myadmin
+    - appDir : todolistapp
+    - repo: 'https://github.com/bortolo/Todolist.git'
+
   tasks:
+    - name: Install Packages
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+       - build-essential
+       - npm
+       - nodejs-legacy
+    - name: Install pm2
+      npm: name=pm2 global=yes production=yes
+    - name: Create APP Directory
+      file: path={{homeDir}}/{{appDir}} state=directory
     - name: Pull file from source
       git:
-        repo: 'https://github.com/bortolo/Todolist.git'
-        dest: /home/myadmin/todolistapp
-    - name: "Install forever (to run Node.js app)."
-      npm: name=forever global=yes state=present
-    - name: "Check list of Node.js apps running."
-      command: forever list
-      register: forever_list
-      changed_when: false
-    - name: "Start example Node.js app."
-      command: forever start /home/myadmin/todolistapp/app.js
-      when: "forever_list.stdout.find('/home/myadmin/todolistapp/app.js') == -1"
+        repo: {{repo}}
+        dest: {{homeDir}}/{{appDir}}
+    - name: Running NPM install
+      npm: path={{homeDir}}/{{appDir}}/backened
+      register: npm_finished
+      when: git_finished.changed
+    - name: Stop APP
+      sudo_user: myadmin
+      command: pm2 stop app chdir={{homeDir}}/{{appDir}}/backened
+      ignore_errors: yes
+    - name: Start APP
+      sudo_user: myadmin
+      command: pm2 start index.js --name app chdir={{homeDir}}/{{appDir}}/backened
+      ignore_errors: yes
+      when: npm_finished.changed
