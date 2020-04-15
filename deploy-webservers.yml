@@ -5,9 +5,12 @@
       git:
         repo: 'https://github.com/bortolo/Todolist.git'
         dest: /home/myadmin/todolistapp
-    - name: Start node server
-      command: node app.js &
-      become: yes
-      become_user: myadmin
-      args:
-       chdir: /home/myadmin/todolistapp
+    - name: "Install forever (to run Node.js app)."
+      npm: name=forever global=yes state=present
+    - name: "Check list of Node.js apps running."
+      command: forever list
+      register: forever_list
+      changed_when: false
+    - name: "Start example Node.js app."
+      command: forever start /home/myadmin/todolistapp/app.js
+      when: "forever_list.stdout.find('/home/myadmin/todolistapp/app.js') == -1"
