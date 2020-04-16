@@ -14,4 +14,4 @@
     - name: Start APP
       command: node app.js &
       args:
-       chdir: {{homeDir}}/{{appDir}}
+       chdir: /home/myadmin/todolistapp
