@@ -7,8 +7,6 @@
     - repo: 'https://github.com/bortolo/Todolist.git'
 
   tasks:
-    - name: Install pm2
-      npm: name=pm2 global=yes production=yes
     - name: Create APP Directory
       file: path={{homeDir}}/{{appDir}} state=directory
     - name: Pull file from source
