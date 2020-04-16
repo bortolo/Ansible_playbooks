@@ -13,14 +13,7 @@
       file: path={{homeDir}}/{{appDir}} state=directory
     - name: Pull file from source
       git: repo={{repo}} dest={{homeDir}}/{{appDir}}
-    - name: Running NPM install
-      npm: path={{homeDir}}/{{appDir}}/backened
-      register: npm_finished
-      when: git_finished.changed
-    - name: Stop APP
-      command: pm2 stop app chdir={{homeDir}}/{{appDir}}/backened
-      ignore_errors: yes
     - name: Start APP
-      command: pm2 start index.js --name app chdir={{homeDir}}/{{appDir}}/backened
-      ignore_errors: yes
-      when: npm_finished.changed
+      command: node app.js &
+      args:
+       chdir: path={{homeDir}}/{{appDir}}
