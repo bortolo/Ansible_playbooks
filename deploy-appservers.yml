@@ -1,5 +1,5 @@
 ---
-- hosts: appservers
+- hosts: all
   tasks:
     - name: Pull file from source
       git:

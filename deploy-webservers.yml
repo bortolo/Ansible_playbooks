@@ -1,5 +1,5 @@
 ---
-- hosts: webservers
+- hosts: all
 
   vars:
     - homeDir: /home/myadmin
