@@ -1,7 +1,7 @@
 plugin: azure_rm
 include_vm_resource_groups:
 - example-three-tier-app
-credential_file: /home/myadmin/ansibleplaybooks/credentials
+auth_source: auto
 keyed_groups:
 - prefix: tag
   key: tags
