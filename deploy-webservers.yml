@@ -11,7 +11,18 @@
       file: path={{homeDir}}/{{appDir}} state=directory
     - name: Pull file from source
       git: repo={{repo}} dest={{homeDir}}/{{appDir}}
-    - name: Start APP
-      command: node app.js &
-      args:
-       chdir: /home/myadmin/todolistapp
+    - name: Move systemctl config file
+      become: yes
+      become_user: root
+      copy:
+       src: /home/myadmin/todolistapp/todolistapp.service
+       dest: /lib/systemd/system/todolistapp.service
+       remote_src: yes
+    - name: Update systemd daemon
+      become: yes
+      become_user: root
+      command: systemctl daemon-reload
+    - name: Launch todolistapp service
+      become: yes
+      become_user: root
+      command: systemctl start todolistapp
