@@ -3,8 +3,19 @@
 # JSON file created by myazure_rm.yml is parsed with jq
 # server.txt is created appending all IPs with the tag tag_environment_app and tag_environment_web
 # server.txt is used by the script onboardVMs.sh to create the ssh tunnel between ansible server and the other servers
+#
+# HOW TO EXECUTE WITH ANSIBLE:
+# - name: Execute ConnectWithServers.sh
+#     command: ./ConnectWithServers.sh
+#     args:
+#       chdir: /home/myadmin/ansibleplaybooks
+#
+# TO DO:
+# The password for the hosts should be passed as parameter.
 
 rm -f server.txt
+
+# Append all IP of the host with tag_environment_app
 LENGTH=$(ansible-inventory -i myazure_rm.yml --list | jq '.tag_environment_app.hosts | length')
 for (( i=0 ; i < $LENGTH ; i++ ));
 do
@@ -16,6 +27,8 @@ do
   temp="${temp#\"}"
   echo $temp >> server.txt
 done
+
+# Append all IP of the host with tag_environment_web
 LENGTH=$(ansible-inventory -i myazure_rm.yml --list | jq '.tag_environment_web.hosts | length')
 for (( i=0 ; i < $LENGTH ; i++ ));
 do
@@ -26,4 +39,11 @@ do
   temp="${temp%\"}"
   temp="${temp#\"}"
   echo $temp >> server.txt
+done
+
+# Crate ssh tunnel with all the host in the list server.txt
+for server in `cat server.txt`;
+do
+    ssh-keyscan -H $server >> ~/.ssh/known_hosts
+    sshpass -p "Password1234!" ssh-copy-id -i ~/.ssh/id_rsa.pub myadmin@$server
 done
