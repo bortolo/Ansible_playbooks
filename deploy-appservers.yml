@@ -3,7 +3,6 @@
   vars:
     gitrepo: https://github.com/bortolo/mainappTodolilst.git
     host_user: myadmin
-    script_name: ConnectWithServers.sh
     path_for_the_app: "/home/{{host_user}}/todolistapp"
 
   tasks:
