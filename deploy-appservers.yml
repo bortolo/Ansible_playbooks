@@ -1,13 +1,19 @@
 ---
 - hosts: all
+  vars:
+    gitrepo: https://github.com/bortolo/mainappTodolilst.git
+    host_user: myadmin
+    script_name: ConnectWithServers.sh
+    path_for_the_app: "/home/{{host_user}}/todolistapp"
+
   tasks:
     - name: Pull file from source
       git:
-        repo: 'https://github.com/bortolo/mainappTodolilst.git'
-        dest: /home/myadmin/todolistapp
+        repo: "{{gitrepo}}"
+        dest: "{{path_for_the_app}}"
     - name: Copy war file in webapps directory
       command: sudo cp HelloWorldServlet.war /var/lib/tomcat8/webapps
       become: yes
       become_user: myadmin
       args:
-       chdir: /home/myadmin/todolistapp
+       chdir: "{{path_for_the_app}}"

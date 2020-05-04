@@ -4,12 +4,6 @@
 # server.txt is created appending all IPs with the tag tag_environment_app and tag_environment_web
 # server.txt is used by the script onboardVMs.sh to create the ssh tunnel between ansible server and the other servers
 #
-# HOW TO EXECUTE WITH ANSIBLE:
-# - name: Execute ConnectWithServers.sh
-#     command: ./ConnectWithServers.sh
-#     args:
-#       chdir: /home/myadmin/ansibleplaybooks
-#
 # TO DO:
 # The password for the hosts should be passed as parameter.
 
