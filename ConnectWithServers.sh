@@ -35,6 +35,9 @@ do
   echo $temp >> server.txt
 done
 
+# Clean all known_hosts
+rm ~/.ssh/known_hosts
+
 # Crate ssh tunnel with all the host in the list server.txt
 for server in `cat server.txt`;
 do
