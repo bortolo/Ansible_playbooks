@@ -21,7 +21,7 @@
       become: yes
       become_user: root
       command: systemctl daemon-reload
-    - name: Launch todolistapp service
-      become: yes
-      become_user: root
-      command: systemctl start todolistapp
+    - name: "Make sure todolistapp is stopped"
+      command: "sudo systemctl stop todolistapp.service"
+    - name: "Make sure todolistapp is started"
+      command: "sudo systemctl start todolistapp.service"
