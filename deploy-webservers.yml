@@ -3,7 +3,7 @@
   vars:
     gitrepo: https://github.com/bortolo/Todolist.git
     host_user: myadmin
-    service_name: "todolistapp"
+    service_name: todolistapp
     path_for_the_app: "/home/{{host_user}}/{{service_name}}"
 
   tasks:
