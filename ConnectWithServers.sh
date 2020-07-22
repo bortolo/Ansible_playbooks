@@ -7,6 +7,8 @@
 # TO DO:
 # The password for the hosts should be passed as parameter.
 
+PASSWORD=$1
+
 rm -f server.txt
 
 # Append all IP of the host with tag_environment_app
@@ -42,5 +44,5 @@ rm ~/.ssh/known_hosts
 for server in `cat server.txt`;
 do
     ssh-keyscan -H $server >> ~/.ssh/known_hosts
-    sshpass -p "Password1234!" ssh-copy-id -i ~/.ssh/id_rsa.pub myadmin@$server
+    sshpass -p $PASSWORD ssh-copy-id -i ~/.ssh/id_rsa.pub myadmin@$server
 done
