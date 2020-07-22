@@ -1,7 +1,8 @@
 ---
 - hosts: all
   vars:
-    gitrepo: https://github.com/bortolo/javawebapp.git #https://github.com/bortolo/mainappTodolilst.git #https://github.com/bortolo/javawebapp.git #
+    #gitrepo: https://github.com/bortolo/javawebapp.git
+    gitrepo: https://github.com/bortolo/mainappTodolilst.git
     host_user: myadmin
     path_for_the_app: "/home/{{host_user}}/todolistapp"
 
@@ -11,8 +12,8 @@
         repo: "{{gitrepo}}"
         dest: "{{path_for_the_app}}"
     - name: Copy war file in webapps directory
-      command: sudo cp target/my-real-app-war.war /var/lib/tomcat8/webapps #sudo cp HelloWorldServlet.war /var/lib/tomcat8/webapps #sudo cp HelloWorldServlet.war /var/lib/tomcat8/webapps #sudo cp target/my-real-app-war.war /var/lib/tomcat8/webapps #sudo cp HelloWorldServlet.war /var/lib/tomcat8/webapps
-      become: yes
+      #command: sudo cp target/my-real-app-war.war /var/lib/tomcat8/webapps
+      command: sudo cp HelloWorldServlet.war /var/lib/tomcat8/webapps
       become_user: myadmin
       args:
        chdir: "{{path_for_the_app}}"
